@@ -1,11 +1,29 @@
 import { StyleSheet, Text, View, Image, KeyboardAvoidingView, TextInput, ScrollView, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { MaterialIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native"
+import useStorage from "../../hooks/useStorage"
 
 const Login = () => {
     const navigation = useNavigation()
+    const { getData } = useStorage()
+
+    useEffect(() => {
+        const checkLoginStatus = async () => {
+            const isLoggedIn = await getData("isLoggedIn");
+            if (isLoggedIn !== "true") {
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'Tabs' }]
+                });
+            } else {
+                setLoading(false);
+            }
+        };
+        checkLoginStatus();
+    }, []);
+
     return (
         <View style={{ backgroundColor: "white", padding: 20, flex: 1 }}>
             <View style={{ marginTop: 20, alignItems: "center" }}>

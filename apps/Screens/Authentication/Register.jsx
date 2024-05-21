@@ -1,8 +1,8 @@
-import { StyleSheet, Text, View, Image, KeyboardAvoidingView, TextInput, ScrollView, TouchableOpacity, Alert, ActivityIndicator } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { StyleSheet, Text, View, Image, KeyboardAvoidingView, TextInput, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import { MaterialIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native"
+import { useNavigation } from "@react-navigation/native";
 import useAuthentication from "../../hooks/useAuthentication";
 
 const Register = () => {
@@ -15,7 +15,6 @@ const Register = () => {
     const handleRegister = async () => {
         await register(name, email, password);
     };
-
 
     return (
         <View style={{ backgroundColor: "white", padding: 20, flex: 1 }}>
@@ -30,47 +29,27 @@ const Register = () => {
 
                     <View style={{ marginTop: 70 }}>
                         <View style={{ flexDirection: "row", alignItems: "center", gap: 10, backgroundColor: "#D0D0D0", paddingHorizontal: 5, paddingVertical: 17, borderRadius: 4 }}>
-                            <MaterialIcons
-                                style={{ marginLeft: 8 }}
-                                name="person"
-                                size={24}
-                                color="gray"
-                            />
+                            <MaterialIcons style={{ marginLeft: 8 }} name="person" size={24} color="gray" />
                             <TextInput placeholder='Enter your name' style={{ width: "100%" }} onChangeText={text => setName(text)} value={name} />
                         </View>
                         <View style={{ flexDirection: "row", alignItems: "center", gap: 10, backgroundColor: "#D0D0D0", paddingHorizontal: 5, paddingVertical: 17, borderRadius: 4, marginTop: 25 }}>
-                            <MaterialIcons
-                                style={{ marginLeft: 8 }}
-                                name="email"
-                                size={24}
-                                color="gray"
-                            />
+                            <MaterialIcons style={{ marginLeft: 8 }} name="email" size={24} color="gray" />
                             <TextInput placeholder='Enter your email' style={{ width: "100%" }} onChangeText={text => setEmail(text)} value={email} />
                         </View>
                         <View style={{ flexDirection: "row", alignItems: "center", gap: 10, backgroundColor: "#D0D0D0", paddingHorizontal: 5, paddingVertical: 17, borderRadius: 4, marginTop: 25 }}>
-                            <AntDesign
-                                name="lock1"
-                                size={24}
-                                color="gray"
-                                style={{ marginLeft: 8 }}
-                            />
+                            <AntDesign name="lock1" size={24} color="gray" style={{ marginLeft: 8 }} />
                             <TextInput placeholder='Enter your password' secureTextEntry={true} style={{ width: "100%" }} onChangeText={text => setPassword(text)} value={password} />
                         </View>
                     </View>
                 </KeyboardAvoidingView>
 
                 <View style={{ marginTop: 70 }}>
-                    <TouchableOpacity style={{
-                        width: 200,
-                        backgroundColor: "#FEBE10",
-                        borderRadius: 6,
-                        marginLeft: "auto",
-                        marginRight: "auto",
-                        padding: 15
-                    }}
-                        onPress={handleRegister}
-                    >
-                        <Text style={{ textAlign: "center", color: "white", fontWeight: "bold", fontSize: 17 }}>{loading ? <ActivityIndicator style={{ textAlign: "center" }} /> : "Register"}</Text>
+                    <TouchableOpacity style={{ width: 200, backgroundColor: "#FEBE10", borderRadius: 6, marginLeft: "auto", marginRight: "auto", padding: 15 }} onPress={handleRegister}>
+                        {loading ? (
+                            <ActivityIndicator color="white" />
+                        ) : (
+                            <Text style={{ textAlign: "center", color: "white", fontWeight: "bold", fontSize: 17 }}>Register</Text>
+                        )}
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => navigation.navigate("Login")}>
                         <Text style={{ marginTop: 15, color: "gray", fontWeight: "bold", textAlign: "center" }}>Already have an account? Sign In</Text>
@@ -81,6 +60,6 @@ const Register = () => {
     )
 }
 
-export default Register
+export default Register;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});
