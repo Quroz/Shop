@@ -1,2 +1,0 @@
-# Shop
-React Native application
