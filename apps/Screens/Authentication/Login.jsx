@@ -2,8 +2,10 @@ import { StyleSheet, Text, View, Image, KeyboardAvoidingView, TextInput, ScrollV
 import React from 'react'
 import { MaterialIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native"
 
 const Login = () => {
+    const navigation = useNavigation()
     return (
         <View style={{ backgroundColor: "white", padding: 20, flex: 1 }}>
             <View style={{ marginTop: 20, alignItems: "center" }}>
@@ -53,7 +55,9 @@ const Login = () => {
                     }}>
                         <Text style={{ textAlign: "center", color: "white", fontWeight: "bold", fontSize: 17 }}>Login</Text>
                     </TouchableOpacity>
-                    <Text style={{ marginTop: 15, color: "gray", fontWeight: "bold", textAlign: "center" }}>Don't have an account? Sign Up</Text>
+                    <TouchableOpacity onPress={() => navigation.navigate("Register")}>
+                        <Text style={{ marginTop: 15, color: "gray", fontWeight: "bold", textAlign: "center" }}>Don't have an account? Sign Up</Text>
+                    </TouchableOpacity>
                 </View>
             </ScrollView>
         </View>
