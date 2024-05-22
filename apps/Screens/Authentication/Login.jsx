@@ -1,24 +1,31 @@
-import { StyleSheet, Text, View, Image, KeyboardAvoidingView, TextInput, ScrollView, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Image, KeyboardAvoidingView, TextInput, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native'
 import React, { useEffect } from 'react'
 import { MaterialIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native"
 import useStorage from "../../hooks/useStorage"
+import useAuthentication from "../../hooks/useAuthentication"
+import { useState } from "react"
 
 const Login = () => {
     const navigation = useNavigation()
     const { getData } = useStorage()
+    const { loading, login } = useAuthentication()
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+
+    const handleLogin = async () => {
+        await login(email, password)
+    }
 
     useEffect(() => {
         const checkLoginStatus = async () => {
             const isLoggedIn = await getData("isLoggedIn");
-            if (isLoggedIn !== "true") {
+            if (isLoggedIn) {
                 navigation.reset({
                     index: 0,
                     routes: [{ name: 'Tabs' }]
                 });
-            } else {
-                setLoading(false);
             }
         };
         checkLoginStatus();
@@ -43,7 +50,7 @@ const Login = () => {
                                 size={24}
                                 color="gray"
                             />
-                            <TextInput placeholder='Enter your email' style={{ width: "100%" }} />
+                            <TextInput placeholder='Enter your email' style={{ width: "100%" }} onChangeText={text => setEmail(text)} value={email} />
                         </View>
                         <View style={{ flexDirection: "row", alignItems: "center", gap: 10, backgroundColor: "#D0D0D0", paddingHorizontal: 5, paddingVertical: 17, borderRadius: 4, marginTop: 25 }}>
                             <AntDesign
@@ -52,7 +59,7 @@ const Login = () => {
                                 color="gray"
                                 style={{ marginLeft: 8 }}
                             />
-                            <TextInput placeholder='Enter your password' secureTextEntry={true} style={{ width: "100%" }} />
+                            <TextInput placeholder='Enter your password' secureTextEntry={true} style={{ width: "100%" }} onChangeText={text => setPassword(text)} value={password} />
                         </View>
                     </View>
                 </KeyboardAvoidingView>
@@ -70,8 +77,14 @@ const Login = () => {
                         marginLeft: "auto",
                         marginRight: "auto",
                         padding: 15
-                    }}>
-                        <Text style={{ textAlign: "center", color: "white", fontWeight: "bold", fontSize: 17 }}>Login</Text>
+                    }}
+                        onPress={handleLogin}
+                    >
+                        <Text style={{ textAlign: "center", color: "white", fontWeight: "bold", fontSize: 17 }}>  {loading ? (
+                            <ActivityIndicator color="white" />
+                        ) : (
+                            <Text style={{ textAlign: "center", color: "white", fontWeight: "bold", fontSize: 17 }}>Login</Text>
+                        )}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => navigation.navigate("Register")}>
                         <Text style={{ marginTop: 15, color: "gray", fontWeight: "bold", textAlign: "center" }}>Don't have an account? Sign Up</Text>
