@@ -12,7 +12,6 @@ export default function useAuthentication() {
     const navigation = useNavigation();
     const { storeData } = useStorage()
     const [loading, setLoading] = useState(false)
-    const [user, setUser] = useState([])
 
     const db = getFirestore(app)
 
