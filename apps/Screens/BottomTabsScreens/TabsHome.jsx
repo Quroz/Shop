@@ -88,7 +88,7 @@ const TabsHome = () => {
                     onPress={() => setModalVisible(!modalVisible)}
                 >
                     <Ionicons name="location-outline" size={24} color="black" />
-                    <Text style={{ fontWeight: "bold" }}>Deliver To Sujan - Bangalore 560024</Text>
+                    <Text style={{ fontWeight: "bold" }}>Add a delivery address</Text>
                     <MaterialIcons name="keyboard-arrow-down" size={24} color="black" />
                 </TouchableOpacity>
 
