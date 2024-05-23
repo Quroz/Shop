@@ -1,10 +1,14 @@
 import { StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity } from 'react-native'
-import React from 'react'
-import { Feather, AntDesign, MaterialIcons } from 'react-native-vector-icons'
+import React, { useContext } from 'react'
+import { AntDesign, MaterialIcons } from 'react-native-vector-icons'
 import { useNavigation } from '@react-navigation/native'
+import { UserDataContext } from '../Context/UserDataContext'
 
 const AddAddressScreen = () => {
     const navigation = useNavigation()
+    const { userAddress } = useContext(UserDataContext)
+
+    console.log(userAddress)
     return (
         <SafeAreaView>
             <View style={{
