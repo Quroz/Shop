@@ -4,9 +4,15 @@ import TabsCart from '../Screens/BottomTabsScreens/TabsCart';
 import TabsProfile from "../Screens/BottomTabsScreens/TabsProfile"
 import { Text } from 'react-native';
 import { AntDesign, Entypo, Ionicons } from '@expo/vector-icons';
+import { View } from 'react-native';
+import { UserDataContext } from '../Context/UserDataContext';
+import { useContext } from 'react';
 
 const Tab = createBottomTabNavigator();
 const BottomTabs = () => {
+
+    const { cart } = useContext(UserDataContext)
+
     return (
         <Tab.Navigator>
             <Tab.Screen name="Tabs-home" component={TabsHome} options={{
@@ -40,9 +46,19 @@ const BottomTabs = () => {
                 tabBarLabelStyle: { color: "#008E97" },
                 tabBarIcon: ({ focused }) =>
                     focused ? (
-                        <AntDesign name="shoppingcart" size={24} color="#008E97" />
+                        <View>
+                            <View style={{ backgroundColor: "yellow", height: 15, width: 15, borderRadius: 99, position: "absolute", zIndex: 10, left: 0, alignItems: "center", justifyContent: "center" }}>
+                                <Text style={{ fontSize: 10 }}>{cart.length}</Text>
+                            </View>
+                            <AntDesign name="shoppingcart" size={24} color="#008E97" />
+                        </View>
                     ) : (
-                        <AntDesign name="shoppingcart" size={24} color="black" />
+                        <View>
+                            <View style={{ backgroundColor: "yellow", height: 15, width: 15, borderRadius: 99, position: "absolute", zIndex: 10, left: 0, alignItems: "center", justifyContent: "center" }}>
+                                <Text style={{ fontSize: 10 }}>{cart.length}</Text>
+                            </View>
+                            <AntDesign name="shoppingcart" size={24} color="black" />
+                        </View>
                     ),
             }} />
         </Tab.Navigator>

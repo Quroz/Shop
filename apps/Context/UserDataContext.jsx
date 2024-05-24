@@ -13,20 +13,52 @@ export const UserDataProvider = ({ children }) => {
     const [cart, setCart] = useState([])
 
 
-    const getCart = async () => {
-        const storageCart = await AsyncStorage.getItem("cart")
-        if (storageCart) {
-            setCart(JSON.parse(storageCart))
-            return JSON.parse(storageCart)
+    useEffect(() => {
+        const loadCart = async () => {
+            const storageCart = await AsyncStorage.getItem("cart")
+            if (storageCart) {
+                setCart(JSON.parse(storageCart))
+                return
+            }
+            return []
         }
-        return []
-    }
+
+        loadCart()
+    }, [])
 
     const addToCart = async (product) => {
         setCart(prevCart => {
             const updatedCart = [...prevCart, product]
             AsyncStorage.setItem("cart", JSON.stringify(updatedCart))
             return updatedCart
+        })
+    }
+
+    const editCart = async (product, cartId) => {
+        setCart(prevCart => {
+            const updatedCart = prevCart.map(item => {
+                if (item.id === cartId) {
+                    return product
+                }
+                return item
+            })
+            AsyncStorage.setItem("cart", JSON.stringify(updatedCart))
+            return updatedCart
+        })
+    }
+
+    const removeFromCart = async (cartId) => {
+        setCart(prevCart => {
+            const updatedCart = prevCart.filter(item => item.id !== cartId)
+            AsyncStorage.setItem("cart", JSON.stringify(updatedCart))
+            return updatedCart
+        })
+    }
+
+    const emptyCart = async () => {
+        setCart(prevCart => {
+            AsyncStorage.setItem("cart", JSON.stringify([]))
+            return []
         })
     }
 
@@ -81,7 +113,7 @@ export const UserDataProvider = ({ children }) => {
     }, [])
 
     return (
-        <UserDataContext.Provider value={{ addUserAddress, userAddress, getCart, addToCart }}>
+        <UserDataContext.Provider value={{ addUserAddress, userAddress, cart, addToCart, editCart, removeFromCart, emptyCart }}>
             {children}
         </UserDataContext.Provider>
     );
