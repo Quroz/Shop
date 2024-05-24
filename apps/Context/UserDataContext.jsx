@@ -10,6 +10,25 @@ export const UserDataContext = createContext();
 export const UserDataProvider = ({ children }) => {
 
     const [userAddress, setUserAddress] = useState([])
+    const [cart, setCart] = useState([])
+
+
+    const getCart = async () => {
+        const storageCart = await AsyncStorage.getItem("cart")
+        if (storageCart) {
+            setCart(JSON.parse(storageCart))
+            return JSON.parse(storageCart)
+        }
+        return []
+    }
+
+    const addToCart = async (product) => {
+        setCart(prevCart => {
+            const updatedCart = [...prevCart, product]
+            AsyncStorage.setItem("cart", JSON.stringify(updatedCart))
+            return updatedCart
+        })
+    }
 
     const addUserAddress = async (country, fullName, mobileNumber, city, streetNumber, landmark, pincode) => {
 
@@ -20,7 +39,7 @@ export const UserDataProvider = ({ children }) => {
         try {
             const userId = await AsyncStorage.getItem("isLoggedIn")
             const addressesCollectionRef = collection(db, "addresses");
-            await addDoc(addressesCollectionRef, {
+            const addressDocRef = await addDoc(addressesCollectionRef, {
                 country,
                 fullName,
                 mobileNumber,
@@ -34,6 +53,7 @@ export const UserDataProvider = ({ children }) => {
                 ...prevAddresses,
                 { id: addressDocRef.id, country, fullName, mobileNumber, city, streetNumber, landmark, pincode, userId }
             ]);
+            Alert.alert("Address Added Successfully")
         } catch (error) {
             console.log(error)
         }
@@ -61,7 +81,7 @@ export const UserDataProvider = ({ children }) => {
     }, [])
 
     return (
-        <UserDataContext.Provider value={{ addUserAddress, userAddress }}>
+        <UserDataContext.Provider value={{ addUserAddress, userAddress, getCart, addToCart }}>
             {children}
         </UserDataContext.Provider>
     );

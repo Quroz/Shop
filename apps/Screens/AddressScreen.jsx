@@ -5,6 +5,7 @@ import { TouchableOpacity } from 'react-native'
 import { ScrollView } from 'react-native'
 import { KeyboardAvoidingView } from 'react-native'
 import { UserDataContext } from '../Context/UserDataContext'
+import { useNavigation } from '@react-navigation/native'
 
 const AddressScreen = () => {
     const [country, setCountry] = useState("")
@@ -16,6 +17,8 @@ const AddressScreen = () => {
     const [landmark, setLandmark] = useState("")
 
     const { addUserAddress } = useContext(UserDataContext)
+
+    const navigation = useNavigation()
 
     return (
         <SafeAreaView>
@@ -37,6 +40,7 @@ const AddressScreen = () => {
                             <Text style={{ fontWeight: "bold", fontSize: 17 }}>Mobile number</Text>
                             <TextInput placeholder='' style={{ borderWidth: 1, borderColor: "gray", borderRadius: 5, padding: 10, marginTop: 15 }}
                                 onChangeText={text => setNumber(text)} value={number}
+                                keyboardType='numeric'
                             />
                         </View>
                         <View style={{ marginTop: 15 }}>
@@ -49,6 +53,7 @@ const AddressScreen = () => {
                             <Text style={{ fontWeight: "bold", fontSize: 17 }}>Street number</Text>
                             <TextInput placeholder='' style={{ borderWidth: 1, borderColor: "gray", borderRadius: 5, padding: 10, marginTop: 15 }}
                                 onChangeText={text => setStreet(text)} value={street}
+                                keyboardType='numeric'
                             />
                         </View>
                         <View style={{ marginTop: 15 }}>
@@ -61,10 +66,11 @@ const AddressScreen = () => {
                             <Text style={{ fontWeight: "bold", fontSize: 17 }}>Pincode</Text>
                             <TextInput placeholder='' style={{ borderWidth: 1, borderColor: "gray", borderRadius: 5, padding: 10, marginTop: 15 }}
                                 onChangeText={text => setPincode(text)} value={pincode}
+                                keyboardType='numeric'
                             />
                         </View>
                         <TouchableOpacity style={{ backgroundColor: "#FFC72C", padding: 20, alignItems: "center", justifyContent: "center", borderRadius: 5, marginTop: 15 }}
-                            onPress={() => addUserAddress(country, name, number, city, street, landmark, pincode)}
+                            onPress={() => { addUserAddress(country, name, number, city, street, landmark, pincode); navigation.goBack() }}
                         >
                             <Text style={{ fontWeight: "bold" }}>Add Address</Text>
                         </TouchableOpacity>
