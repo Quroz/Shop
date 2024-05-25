@@ -1,12 +1,15 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
 import { BottomModal, SlideAnimation, ModalContent } from "react-native-modals";
 import { TouchableOpacity } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from 'react-native-vector-icons'
+import { UserDataContext } from "../Context/UserDataContext"
 
 const Modal = ({ setModalVisible, modalVisible }) => {
     const navigation = useNavigation()
+    const { userAddress } = useContext(UserDataContext)
+
     return (
         <BottomModal
             onBackdropPress={() => setModalVisible(!modalVisible)}

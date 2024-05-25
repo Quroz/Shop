@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity, FlatList, Image, ScrollView } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../Context/UserContext'
+import { UserDataContext } from '../../Context/UserDataContext';
 import { AntDesign, Feather, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { list, images, deals, offers } from "../../../data"
 import { ImageSlider } from "react-native-image-slider-banner";
@@ -22,6 +23,8 @@ const TabsHome = () => {
         { label: "electronics", value: "electronics" },
         { label: "women's clothing", value: "women's clothing" },
     ]);
+
+    const { addOrRemoveToCart } = useContext(UserDataContext)
 
     useEffect(() => {
         if (value == null || value === "All" || !categories.some(category => category.value === value)) {
@@ -211,7 +214,9 @@ const TabsHome = () => {
                                     <Text style={{ fontWeight: "bold", fontSize: 15 }}>{item.price}</Text>
                                     <Text style={{ fontWeight: "bold", color: "#FFC72C" }}>{item.rating.rate} ratings</Text>
                                 </View>
-                                <TouchableOpacity style={{ backgroundColor: "#FFC72C", borderRadius: 99, paddingHorizontal: 10, paddingVertical: 15, alignItems: "center", justifyContent: "center", marginTop: 5 }}>
+                                <TouchableOpacity style={{ backgroundColor: "#FFC72C", borderRadius: 99, paddingHorizontal: 10, paddingVertical: 15, alignItems: "center", justifyContent: "center", marginTop: 5 }}
+                                    onPress={() => addOrRemoveToCart(item, "add")}
+                                >
                                     <Text style={{ fontSize: 15 }}>Add to Cart</Text>
                                 </TouchableOpacity>
                             </View>

@@ -48,14 +48,14 @@ const BottomTabs = () => {
                     focused ? (
                         <View>
                             <View style={{ backgroundColor: "yellow", height: 15, width: 15, borderRadius: 99, position: "absolute", zIndex: 10, left: 0, alignItems: "center", justifyContent: "center" }}>
-                                <Text style={{ fontSize: 10 }}>{cart.length}</Text>
+                                <Text style={{ fontSize: 10, fontWeight: "bold" }}>{cart.length}</Text>
                             </View>
                             <AntDesign name="shoppingcart" size={24} color="#008E97" />
                         </View>
                     ) : (
                         <View>
                             <View style={{ backgroundColor: "yellow", height: 15, width: 15, borderRadius: 99, position: "absolute", zIndex: 10, left: 0, alignItems: "center", justifyContent: "center" }}>
-                                <Text style={{ fontSize: 10 }}>{cart.length}</Text>
+                                <Text style={{ fontSize: 10, fontWeight: "bold" }}>{cart.length}</Text>
                             </View>
                             <AntDesign name="shoppingcart" size={24} color="black" />
                         </View>

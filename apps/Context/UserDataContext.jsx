@@ -26,13 +26,32 @@ export const UserDataProvider = ({ children }) => {
         loadCart()
     }, [])
 
-    const addToCart = async (product) => {
+
+    const addOrRemoveToCart = async (product, action) => {
         setCart(prevCart => {
-            const updatedCart = [...prevCart, product]
-            AsyncStorage.setItem("cart", JSON.stringify(updatedCart))
-            return updatedCart
-        })
-    }
+            let productExists = false;
+            const updatedCart = prevCart.map(item => {
+                if (item.description === product.description) {
+                    productExists = true;
+                    if (action === "add") {
+                        return { ...item, amount: item.amount + 1 };
+                    }
+                    else if (action === "remove" && item.amount > 1) {
+                        return { ...item, amount: item.amount - 1 };
+                    }
+                }
+                return item;
+            });
+
+            if (!productExists) {
+                updatedCart.push({ ...product, amount: 1 });
+            }
+
+            AsyncStorage.setItem("cart", JSON.stringify(updatedCart));
+            return updatedCart;
+        });
+    };
+
 
     const editCart = async (product, cartId) => {
         setCart(prevCart => {
@@ -113,7 +132,7 @@ export const UserDataProvider = ({ children }) => {
     }, [])
 
     return (
-        <UserDataContext.Provider value={{ addUserAddress, userAddress, cart, addToCart, editCart, removeFromCart, emptyCart }}>
+        <UserDataContext.Provider value={{ addUserAddress, userAddress, cart, addOrRemoveToCart, editCart, removeFromCart, emptyCart }}>
             {children}
         </UserDataContext.Provider>
     );
