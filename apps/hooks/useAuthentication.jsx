@@ -6,6 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useState } from "react"
 import useStorage from "./useStorage"
 import { app } from "../../firebase"
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 export default function useAuthentication() {
@@ -28,6 +29,29 @@ export default function useAuthentication() {
             navigation.reset({
                 index: 0,
                 routes: [{ name: 'Tabs' }]
+            });
+            setLoading(false)
+        } catch (error) {
+            Alert.alert(
+                "Error",
+                error.code,
+                [
+                    { text: "OK" }
+                ],
+                { cancelable: false }
+            );
+            setLoading(false)
+        }
+    }
+
+    const logout = async () => {
+        try {
+            setLoading(true)
+            await auth.signOut();
+            await AsyncStorage.removeItem("isLoggedIn")
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'Login' }]
             });
             setLoading(false)
         } catch (error) {
@@ -68,5 +92,5 @@ export default function useAuthentication() {
         }
     }
 
-    return { register, loading, login }
+    return { register, loading, login, logout }
 }

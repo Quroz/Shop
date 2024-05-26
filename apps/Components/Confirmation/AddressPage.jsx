@@ -1,8 +1,12 @@
 import { Text, View, TouchableOpacity, ScrollView } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
 import { Entypo } from 'react-native-vector-icons'
+import { UserDataContext } from '../../Context/UserDataContext'
 
 const AddressPage = ({ userAddress, setCurrentOption, addressOption, setAddressOption }) => {
+    console.log(userAddress)
+    const { removeUserAddress, getUserAddreses } = useContext(UserDataContext)
+
     return (
         <View style={{ padding: 20 }}>
             <Text style={{ fontWeight: "bold", fontSize: 17 }}>Select Delivery Address</Text>
@@ -31,20 +35,24 @@ const AddressPage = ({ userAddress, setCurrentOption, addressOption, setAddressO
                                 <Text style={{ fontSize: 15 }}>Street number: {address?.streetNumber}</Text>
                                 <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
                                     <TouchableOpacity style={{ borderWidth: 1, borderRadius: 4, padding: 5, borderColor: "lightgray" }}><Text>Edit</Text></TouchableOpacity>
-                                    <TouchableOpacity style={{ borderWidth: 1, borderRadius: 4, padding: 5, borderColor: "lightgray" }}><Text>Remove</Text></TouchableOpacity>
+                                    <TouchableOpacity style={{ borderWidth: 1, borderRadius: 4, padding: 5, borderColor: "lightgray" }}
+                                        onPress={() => removeUserAddress(address.id)}
+                                    ><Text>Remove</Text></TouchableOpacity>
                                 </View>
                                 <TouchableOpacity
                                     onPress={() => setCurrentOption(currentOption => Math.min(4, currentOption + 1))}
                                     style={{
-                                        backgroundColor: "#008397",
+                                        backgroundColor: addressOption === null ? "lightgray" : "#008397",
                                         padding: 10,
                                         borderRadius: 20,
                                         justifyContent: "center",
                                         alignItems: "center",
                                         marginTop: 10,
                                     }}
+                                    disabled={addressOption === null}
                                 >
-                                    <Text style={{ textAlign: "center", color: "white" }}>
+                                    <Text style={{ textAlign: "center", color: "white" }}
+                                    >
                                         Deliver to this Address
                                     </Text>
                                 </TouchableOpacity>

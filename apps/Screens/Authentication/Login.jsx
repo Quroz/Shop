@@ -21,6 +21,7 @@ const Login = () => {
     useEffect(() => {
         const checkLoginStatus = async () => {
             const isLoggedIn = await getData("isLoggedIn");
+            console.log("LOGIN", isLoggedIn)
             if (isLoggedIn) {
                 navigation.reset({
                     index: 0,

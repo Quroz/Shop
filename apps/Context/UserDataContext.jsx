@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getDoc, doc, addDoc, collection, query, where, getDocs } from 'firebase/firestore';
+import { getDoc, doc, addDoc, collection, query, where, getDocs, deleteDoc } from 'firebase/firestore';
 import { db } from "../../firebase"
 import { Alert } from 'react-native';
 
@@ -11,10 +11,12 @@ export const UserDataProvider = ({ children }) => {
 
     const [userAddress, setUserAddress] = useState([])
     const [cart, setCart] = useState([])
+    const [loadingCart, setLoadingCart] = useState(false)
 
 
     useEffect(() => {
         const loadCart = async () => {
+            setLoadingCart(true)
             const storageCart = await AsyncStorage.getItem("cart")
             if (storageCart) {
                 setCart(JSON.parse(storageCart))
@@ -24,6 +26,7 @@ export const UserDataProvider = ({ children }) => {
         }
 
         loadCart()
+        setLoadingCart(false)
     }, [])
 
 
@@ -110,6 +113,18 @@ export const UserDataProvider = ({ children }) => {
         }
     }
 
+    const removeUserAddress = async (addressId) => {
+        try {
+            const addressesCollectionRef = collection(db, "addresses");
+            const addressDocRef = doc(addressesCollectionRef, addressId);
+            await deleteDoc(addressDocRef);
+            Alert.alert("Address Deleted Successfully")
+            getUserAddreses()
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const getUserAddreses = async () => {
         try {
             const userId = await AsyncStorage.getItem("isLoggedIn");
@@ -132,7 +147,7 @@ export const UserDataProvider = ({ children }) => {
     }, [])
 
     return (
-        <UserDataContext.Provider value={{ addUserAddress, userAddress, cart, addOrRemoveToCart, editCart, removeFromCart, emptyCart }}>
+        <UserDataContext.Provider value={{ addUserAddress, userAddress, cart, addOrRemoveToCart, editCart, removeFromCart, emptyCart, removeUserAddress, loadingCart }}>
             {children}
         </UserDataContext.Provider>
     );

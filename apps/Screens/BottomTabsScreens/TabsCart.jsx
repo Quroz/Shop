@@ -6,9 +6,10 @@ import { Image } from 'react-native'
 import { Feather } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native"
+import { ActivityIndicator } from 'react-native'
 
 const TabsCart = () => {
-    const { cart, addOrRemoveToCart, removeFromCart } = useContext(UserDataContext)
+    const { cart, addOrRemoveToCart, removeFromCart, loadingCart } = useContext(UserDataContext)
     const [totalPrice, setTotalPrice] = useState(0)
     const navigation = useNavigation()
 
@@ -24,6 +25,7 @@ const TabsCart = () => {
     }, [cart])
 
     console.log(cart)
+    console.log(loadingCart)
     return (
         <ScrollView style={{ flex: 1, backgroundColor: "white" }}>
             <View style={{ paddingHorizontal: 10, marginTop: 20 }}>
@@ -44,8 +46,7 @@ const TabsCart = () => {
                         return (
                             <View key={item.id} style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 20 }}>
                                 <View style={{ alignItems: "center" }}>
-                                    <Image source={{ uri: item?.image }} style={{ width: 140, height: 140, resizeMode: "contain" }} />
-
+                                    {loadingCart ? <ActivityIndicator size={"large"} /> : <Image source={{ uri: item?.image }} style={{ width: 140, height: 140, resizeMode: "contain" }} />}
                                     <View>
                                         <View style={{ flexDirection: "row", gap: 10, alignItems: "center", marginTop: 15 }}>
                                             <TouchableOpacity style={{ padding: 8, backgroundColor: item.amount === 1 ? "#f0f0f0" : "lightgray", alignItems: "center", justifyContent: "center", borderRadius: 4 }}

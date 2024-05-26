@@ -58,33 +58,11 @@ const TabsHome = () => {
 
     return (
         <>
-            <SafeAreaView style={{ backgroundColor: "white", flex: 1 }}>
-                <View style={{
-                    backgroundColor: "#00CED1",
-                    padding: 10,
-                    flexDirection: "row",
-                    alignItems: "center",
-                    gap: 10
-                }}>
-                    <View style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                        backgroundColor: "white",
-                        padding: 12,
-                        flex: 1,
-                        marginHorizontal: 7
-                    }}>
-                        <AntDesign
-                            style={{ paddingLeft: 10 }}
-                            name="search1"
-                            size={22}
-                            color="black"
-                        />
-                        <TextInput placeholder='Search Amazon.in' style={{ width: "100%", marginLeft: 10 }} />
+            <View style={{ backgroundColor: "white", flex: 1 }}>
+                <View style={{ width: "100%", height: 100, backgroundColor: "#00CED1", }}>
+                    <View style={{ marginTop: 20, alignItems: "center" }}>
+                        <Image source={{ uri: "https://assets.stickpng.com/thumbs/6160562276000b00045a7d97.png" }} style={{ width: 150, height: 100 }} />
                     </View>
-                    <TouchableOpacity>
-                        <Feather name="mic" size={24} color="black" />
-                    </TouchableOpacity>
                 </View>
 
                 <TouchableOpacity style={{ backgroundColor: "#AFEEEE", padding: 10, paddingVertical: 12, flexDirection: "row", alignItems: "center", gap: 5 }}
@@ -223,7 +201,7 @@ const TabsHome = () => {
                         ))}
                     </View>
                 </ScrollView>
-            </SafeAreaView>
+            </View>
             <Modal setModalVisible={setModalVisible} modalVisible={modalVisible} />
         </>
     )
