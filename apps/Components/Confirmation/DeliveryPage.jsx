@@ -26,13 +26,14 @@ const DeliveryPage = ({ setDeliveryOption, deliveryOption, setCurrentOption }) =
             <TouchableOpacity
                 onPress={() => setCurrentOption(currentOption => Math.min(4, currentOption + 1))}
                 style={{
-                    backgroundColor: "#FFC72C",
+                    backgroundColor: deliveryOption ? "#FFC72C" : "lightgray",
                     padding: 10,
                     borderRadius: 20,
                     justifyContent: "center",
                     alignItems: "center",
                     marginTop: 15,
                 }}
+                disabled={!deliveryOption}
             >
                 <Text>Continue</Text>
             </TouchableOpacity>
